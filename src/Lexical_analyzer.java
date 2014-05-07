@@ -32,7 +32,7 @@ public class Lexical_analyzer {
 		try{
 			return ch[pos];
 		}catch(ArrayIndexOutOfBoundsException e){
-			return ' ';
+			return '$';
 		}
 	}
 	
@@ -110,7 +110,6 @@ public class Lexical_analyzer {
 					case 2:{
 						if(ch_pos>=97&&ch_pos<=122||ch_pos>='0'&&ch_pos<='9'){
 						//字母或者数字 继续读
-						
 							word += ch_pos;
 							pos++;
 						}else{
@@ -174,8 +173,12 @@ public class Lexical_analyzer {
 				}		
 			}else{
 			//非法字符
-				System.out.println("Error:非法字符"+ch_pos);
-				break;
+				if(ch_pos=='$'){
+					add("$",null,null);
+				} else{
+					System.out.println("Error:非法字符"+ch_pos);
+					break;
+				}
 			}
 		}
 	}
@@ -311,8 +314,12 @@ public class Lexical_analyzer {
 				}		
 			}else{
 			//非法字符
-				System.out.println("Error:非法字符"+ch_pos);
-				break;
+				if(ch_pos=='$'){
+					rtn_las = new LAS("$",null,null);
+				} else{
+					System.out.println("Error:非法字符"+ch_pos);
+					break;
+				}
 			}
 		}
 		return rtn_las;
@@ -381,10 +388,10 @@ public class Lexical_analyzer {
 		la.init();
 		la.getsys();
 		la.print();
-		/*LAS rtn_las = la.getWord();
+		LAS rtn_las = la.getWord();
 		while(!rtn_las.getSym().equals("")){
 			rtn_las.print();
 			rtn_las = la.getWord();
-		}*/
+		}
 	}
 }
