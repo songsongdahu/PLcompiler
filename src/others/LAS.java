@@ -1,3 +1,4 @@
+package others;
 
 public class LAS {
 	private String sym;

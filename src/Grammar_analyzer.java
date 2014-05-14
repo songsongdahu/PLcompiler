@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Stack;
 
-import LR1.*;
+import others.*;
 
 
 public class Grammar_analyzer {
@@ -21,45 +21,58 @@ public class Grammar_analyzer {
 			};
 	private String[][] table;
 	private Lexical_analyzer la;
+	private Semantic_analyzer sa;
 	
 	//语法分析
 	public void analyze(LR1Items G){
 		//初始化
-		Stack<String> stack = new Stack<String>();
-		stack.push("0");
-		String input = getword().getSym();
+		sa = new Semantic_analyzer();
+		Stack<String> statuStack = new Stack<String>();
+		Stack<item> inputStack = new Stack<item>();
+		statuStack.push("0");
+		LAS input = getword();
 		
 		String state = "0";
 		while(state!=null){
-			String act = table[Integer.parseInt(state)][rtnPos(sym1,input)];
+			String act = ""+table[Integer.parseInt(state)][rtnPos(sym1,input.getSym())];
 			if(act.charAt(0)=='s'){
 				//移入
-				stack.push(act.substring(1));
+				statuStack.push(act.substring(1));
 				state = act.substring(1);
-				input = getword().getSym();
+				inputStack.push(toItem(input));
+				input = getword();
 			} else if(act.charAt(0)=='r'){
 				//规约
 				String sts = "";
 				String str = G.get(Integer.parseInt(act.substring(1))).getLeftsymbol().getDsb();
+				
+				ArrayList<item> forSaItem = new ArrayList<item>();
 				if(G.get(Integer.parseInt(act.substring(1))).getProduction().get(0).getTml()==2){
 					//空规约
 				} else {
 					for(int i=0;i<G.get(Integer.parseInt(act.substring(1))).getProduction().size();i++){
-						stack.pop();
+						statuStack.pop();
+						forSaItem.add(inputStack.pop());
 					}
 				}
-				sts = stack.pop();
-				stack.push(sts);
+				//语义分析
+				inputStack.push(sa.analyzer(G, Integer.parseInt(act.substring(1)), forSaItem));
+				
+				sts = statuStack.pop();
+				statuStack.push(sts);
 				String st = table[Integer.parseInt(sts)][rtnPos(sym1,str)];
-				stack.push(st.substring(1));
+				statuStack.push(st.substring(1));
 				state = st.substring(1);
 			} else if(act.equals("acc")){
 				//接受
 				System.out.println("Accept!");
 				state = null;
+				sa.print();
 			} else {
 				//错误
 				System.out.println("Error!");
+				System.out.println(Integer.parseInt(state));
+				System.out.println(rtnPos(sym1,input.getSym()));
 				state = null;
 			}
 		}
@@ -139,13 +152,23 @@ public class Grammar_analyzer {
 		}
 	}
 	
+	public item toItem(LAS las){
+		if(las.getSym().equals("IDENT")){
+			return new item(las.getSym(), las.getId(), "");
+		} else if(las.getSym().equals("NUMBER")) {
+			return new item(las.getSym(), las.getNum(), "");
+		} else {
+			return new item(las.getSym(), "", "");
+		}
+	}
+	
 	public static void main(String[] args) {
 		LR1Items G = readtxt();
-		//System.out.println(G);
+		System.out.println(G);
 		Grammar_analyzer ga = new Grammar_analyzer();
 		LR1 lr = new LR1();
 		ga.initTable(lr.items(G));
-		//ga.printTable(ga.table);
+		ga.printTable(ga.table);
 		
 		//读取输入
 		String str = "";

@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import others.*;
 
 public class Lexical_analyzer {
 	ArrayList<String> sym;
@@ -65,22 +66,22 @@ public class Lexical_analyzer {
 							status = 1;
 							pos++;
 						}else if(ch_pos>=97&&ch_pos<=122){
-						//如果是字母 转入状态3(开始读标识符or保留字)
+						//如果是字母 转入状态2(开始读标识符or保留字)
 							word += ch_pos;
 							status = 2;
 							pos++;
 						}else if(ch_pos=='>'||ch_pos=='<'){
-						//如果是>< 转入状态5
+						//如果是>< 转入状3
 							word += ch_pos;
 							status = 3;
 							pos++;
 						}else if(ch_pos==':'){
-						//如果是: 转入状态7
+						//如果是: 转入状态5
 							word += ch_pos;
 							status = 5;
 							pos++;
 						}else if(existence(ch_pos,symbol)!=-1){
-						//如果是单字节符号 转入状态9
+						//如果是单字节符号 转入状态7
 							word += ch_pos;
 							status = 7;
 						}else if(ch_pos=='.'){
@@ -205,22 +206,22 @@ public class Lexical_analyzer {
 							status = 1;
 							pos++;
 						}else if(ch_pos>=97&&ch_pos<=122){
-						//如果是字母 转入状态3(开始读标识符or保留字)
+						//如果是字母 转入状态2(开始读标识符or保留字)
 							word += ch_pos;
 							status = 2;
 							pos++;
 						}else if(ch_pos=='>'||ch_pos=='<'){
-						//如果是>< 转入状态5
+						//如果是>< 转入状态3
 							word += ch_pos;
 							status = 3;
 							pos++;
 						}else if(ch_pos==':'){
-						//如果是: 转入状态7
+						//如果是: 转入状态5
 							word += ch_pos;
 							status = 5;
 							pos++;
 						}else if(existence(ch_pos,symbol)!=-1){
-						//如果是单字节符号 转入状态9
+						//如果是单字节符号 转入状态7
 							word += ch_pos;
 							status = 7;
 						}else if(ch_pos=='.'){
@@ -250,7 +251,6 @@ public class Lexical_analyzer {
 					case 2:{
 						if(ch_pos>=97&&ch_pos<=122||ch_pos>='0'&&ch_pos<='9'){
 						//字母或者数字 继续读
-						
 							word += ch_pos;
 							pos++;
 						}else{

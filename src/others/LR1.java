@@ -1,4 +1,4 @@
-package LR1;
+package others;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
