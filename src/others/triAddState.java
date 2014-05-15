@@ -16,8 +16,28 @@ public class triAddState {
 		this.opt = opt;
 	}
 	
+	public int getSeq(){
+		return seq;
+	}
+	
 	public void setX(String x){
 		this.x = x;
+	}
+	
+	public String getX(){
+		return x;
+	}
+	
+	public String getY(){
+		return y;
+	}
+
+	public String getZ(){
+		return z;
+	}
+	
+	public String getOpt(){
+		return opt;
 	}
 	
 	public String toString(){

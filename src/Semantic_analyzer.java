@@ -217,6 +217,10 @@ public class Semantic_analyzer {
 		return "T"+tempCount;
 	}
 	
+	public ArrayList<triAddState> getTriTable(){
+		return triTable;
+	}
+	
 	public void print(){
 		System.out.println("This is the answer of saTable");
 		for(int i=0;i<saTable.size();i++){

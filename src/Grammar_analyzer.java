@@ -21,12 +21,10 @@ public class Grammar_analyzer {
 			};
 	private String[][] table;
 	private Lexical_analyzer la;
-	private Semantic_analyzer sa;
 	
 	//语法分析
-	public void analyze(LR1Items G){
+	public void analyze(LR1Items G, Semantic_analyzer sa){
 		//初始化
-		sa = new Semantic_analyzer();
 		Stack<String> statuStack = new Stack<String>();
 		Stack<item> inputStack = new Stack<item>();
 		statuStack.push("0");
@@ -67,7 +65,6 @@ public class Grammar_analyzer {
 				//接受
 				System.out.println("Accept!");
 				state = null;
-				sa.print();
 			} else {
 				//错误
 				System.out.println("Error!");
@@ -164,11 +161,9 @@ public class Grammar_analyzer {
 	
 	public static void main(String[] args) {
 		LR1Items G = readtxt();
-		System.out.println(G);
 		Grammar_analyzer ga = new Grammar_analyzer();
 		LR1 lr = new LR1();
 		ga.initTable(lr.items(G));
-		ga.printTable(ga.table);
 		
 		//读取输入
 		String str = "";
@@ -182,6 +177,10 @@ public class Grammar_analyzer {
 		}
 		System.out.println(str);
 		ga.initInput(str);
-		ga.analyze(G);
+		Semantic_analyzer sa = new Semantic_analyzer();
+		ga.analyze(G,sa);
+		sa.print();
+		Code_optimizer co = new Code_optimizer();
+		co.optimizer(sa.getTriTable());
 	}
 }
