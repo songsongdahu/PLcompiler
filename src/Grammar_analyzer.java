@@ -180,7 +180,23 @@ public class Grammar_analyzer {
 		Semantic_analyzer sa = new Semantic_analyzer();
 		ga.analyze(G,sa);
 		sa.print();
+		
 		Code_optimizer co = new Code_optimizer();
-		co.optimizer(sa.getTriTable());
+		ArrayList<ArrayList<triAddState>> temp = co.optimizer(sa.getTriTable());
+		
+		Target_code tc = new Target_code();
+		tc.usedInfo(sa.getSaTable(), temp, sa.tempCount);
+		ArrayList<ArrayList<objCode>> answer = new ArrayList<ArrayList<objCode>>();
+		for(int i=0;i<temp.size();i++){
+			ArrayList<objCode> ans = tc.code_generation(temp.get(i));
+			answer.add(ans);
+		}
+		for(int i=0;i<answer.size();i++){
+			for(int j=0;j<answer.get(i).size();j++){
+				System.out.println(answer.get(i).get(j));
+			}
+			System.out.println();
+		}
+	
 	}
 }

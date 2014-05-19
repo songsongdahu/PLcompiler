@@ -220,6 +220,10 @@ public class Semantic_analyzer {
 	public ArrayList<triAddState> getTriTable(){
 		return triTable;
 	}
+
+	public ArrayList<saSymbol> getSaTable(){
+		return saTable;
+	}
 	
 	public void print(){
 		System.out.println("This is the answer of saTable");

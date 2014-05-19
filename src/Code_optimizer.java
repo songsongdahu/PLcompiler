@@ -6,22 +6,23 @@ import others.triAddState;
 
 public class Code_optimizer {
 	
-	public void optimizer(ArrayList<triAddState> triTable){
+	public ArrayList<ArrayList<triAddState>> optimizer(ArrayList<triAddState> triTable){
 		ArrayList<ArrayList<triAddState>> oldTable = classify(triTable);
-		ArrayList<ArrayList<triAddState>> newTable = new ArrayList<ArrayList<triAddState>>();
+		/*ArrayList<ArrayList<triAddState>> newTable = new ArrayList<ArrayList<triAddState>>();
 		
-		for(int i=0;i<newTable.size();i++){
+		for(int i=0;i<oldTable.size();i++){
 			ArrayList<triAddState> tempTable = oldTable.get(i);
 			tempTable = DAGoptimizer(tempTable);
 			newTable.add(tempTable);
 		}
-		
+		System.out.println("This is the answer of Code_optimizer");
 		for(int i=0;i<newTable.size();i++){
 			for(int j=0;j<newTable.get(i).size();j++){
 				System.out.println(newTable.get(i).get(j));
 			}
 			System.out.println();
-		}
+		}*/
+		return oldTable;
 	}
 	
 	public ArrayList<ArrayList<triAddState>> classify(ArrayList<triAddState> triTable){
@@ -54,7 +55,7 @@ public class Code_optimizer {
 			}
 			rtnTable.add(temp);
 		}
-		System.out.println("This is the answer of Code_optimizer");
+		System.out.println("This is the answer of classify");
 		for(int i=0;i<rtnTable.size();i++){
 			for(int j=0;j<rtnTable.get(i).size();j++){
 				System.out.println(rtnTable.get(i).get(j));
